@@ -4,7 +4,7 @@ class User < ApplicationRecord
   before_save {email.downcase!}
 
   validates :name, presence: true , length: {maximum: 50}
-  validates :email, presence: true, length: {maximum: 255},
+  validates :email, presence: true , length: {maximum: 255},
             format: {with: VALID_EMAIL_REGEX, message: "Vui long nhap lai Email"},
             uniqueness: true
   has_secure_password
