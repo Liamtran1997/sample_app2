@@ -12,6 +12,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     end
     follow_redirect!
     assert_template 'users/show'
+    assert is_logged_in? # Check user after signup auto login
     # assert_not flash[:success]
   end
 
