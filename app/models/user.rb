@@ -10,7 +10,7 @@ class User < ApplicationRecord
             format: {with: VALID_EMAIL_REGEX, message: "Vui long nhap lai Email"},
             uniqueness: true
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
   class << self
     # Returns the hash digest of the given string.
@@ -24,7 +24,7 @@ class User < ApplicationRecord
     def new_token
       SecureRandom.urlsafe_base64
     end
-    end
+  end
 
   # Remembers a user in the database for use in persistent sessions.
   def remember
