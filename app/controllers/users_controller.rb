@@ -6,7 +6,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    # debugger
   end
 
   def new
@@ -26,9 +25,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      log_in(@user)
-      flash[:success] = "Welcome to the Sample App!" # This one show the message to display when register success
-      redirect_to @user # That's mean redirect_to user_url(@user)
+      @user.send_activation_email # Send activation to own email
+      flash[:info] = "Please check your email to activate your account." # This one show the message to display when register success
+      redirect_to root_url # That's mean redirect_to user_url(@user)
     else
       render 'new'
     end
@@ -36,7 +35,7 @@ class UsersController < ApplicationController
 
 
   def edit
-    @user = User.find(params[:id])
+    @users = User.where(activated: true).paginate(page: params[:page])
   end
 
   def update
