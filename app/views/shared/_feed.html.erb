@@ -1,0 +1,10 @@
+<!--The status feed partial  = Newsfeed-->
+<% if @feed_items.any? %>
+  <ol class="microposts">
+    <%= render @feed_items %>
+  </ol>
+
+<!--Setting an explicit controller and action.-->
+  <%= will_paginate @feed_items,
+                    params: { controller: :static_pages, action: :home } %>
+<% end %>

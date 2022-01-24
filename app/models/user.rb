@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :microposts, dependent: :destroy # dependent: :destroy when user destroy then their post destroy too
   attr_accessor :remember_token, :activation_token
 
   VALID_EMAIL_REGEX =  /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
@@ -61,6 +62,12 @@ class User < ApplicationRecord
   # Send activation email.
   def send_activation_email
     UserMailer.account_activation(self).deliver_now # self = @user
+  end
+
+  # Defines a proto-feed.
+  # See "Following users" for the full implementation.
+  def feed
+    Micropost.where("user_id = ?", id)
   end
 
   private
