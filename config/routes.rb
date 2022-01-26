@@ -10,7 +10,13 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.
   root 'static_pages#home'
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+      # Adding following and followers actions look like : /users/1/following or /users/1/followers
+    end
+  end
   resources :account_activations, only: [:edit]
   resources :microposts, only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy] # Adding the routes for user relationships.
 end
